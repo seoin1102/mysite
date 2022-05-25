@@ -6,10 +6,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.douzone.mysite.web.mvc.guestbook.GuestbookActionFactory;
 import com.douzone.mysite.web.mvc.user.UserActionFactory;
 import com.douzone.web.mvc.Action;
 import com.douzone.web.mvc.ActionFactory;
-
 
 public class GuestbookController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -19,9 +19,9 @@ public class GuestbookController extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		String actioName = request.getParameter("a");
 		
-//		ActionFactory factory= new GuestbookActionFactory();
-//		Action action = factory.getAction(actioName);
-//		action.execute(request, response);
+		ActionFactory factory= new GuestbookActionFactory();
+		Action action = factory.getAction(actioName);
+		action.execute(request, response);
 	}
 
 	
