@@ -5,17 +5,21 @@ import com.douzone.web.mvc.Action;
 import com.douzone.web.mvc.ActionFactory;
 
 public class UserActionFactory extends ActionFactory {
-	Action action = null;
+
 	@Override
 	public Action getAction(String actionName) {
-		if("join".equals(actionName)) {
-			//action = new JoinAction();
-		}else if("".equals(actionName)) {
-			
-		}else {
+		Action action = null;
+		
+		if("joinform".equals(actionName)) {
+			action = new JoinFormAction();
+		} else if("join".equals(actionName)) {
+			action = new JoinAction();
+		} else if("joinsuccess".equals(actionName)) {
+			action = new JoinSuccess();
+		} else {
 			action = new DefaultAction();
 		}
+		
 		return action;
 	}
-
 }
