@@ -21,9 +21,7 @@ public class WebUtil {
 			HttpServletRequest request, 
 			HttpServletResponse response, 
 			String url)throws ServletException, IOException {
-			request
-				.getRequestDispatcher(url)
-				.forward(request, response);
+			response.sendRedirect(url);
 		
 	}
 
