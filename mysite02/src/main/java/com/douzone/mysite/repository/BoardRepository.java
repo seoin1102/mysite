@@ -180,6 +180,7 @@ public class BoardRepository {
 
 	
 			BoardVo vo = new BoardVo();
+			vo.setNo(no);
 			vo.setTitle(title);
 			vo.setContents(contents);
 			vo.setHit(hit);
@@ -215,6 +216,101 @@ public class BoardRepository {
 			
 		return result;
 }
+	public List<BoardVo> modify(BoardVo vo) {
+		List<BoardVo> result = null;
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		try {
+		
+			
+			//1. JDBC Driver 로딩 (JDBC Class 로딩: class loader)
+			Class.forName("org.mariadb.jdbc.Driver");
+			
+			//2. 연결하기
+			String url = "jdbc:mysql://192.168.10.46:3306/webdb?charset=utf8";
+			
+			connection = DriverManager.getConnection(url, "webdb", "webdb");
+			
+			//3. SQL 준비
+			String sql = "update board set title=? , contents=? where no=? "; //값을 바인딩시킴. 치환시키는것이 아님!
+			pstmt = connection.prepareStatement(sql);
+			
+			//4. Mapping(bind)
+			pstmt.setString(1, vo.getTitle());
+			pstmt.setString(2, vo.getContents());
+			pstmt.setLong(3, vo.getNo());
+		
+			//5. SQL 실생
+			int count = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			System.out.println("드라이버 로딩 실패:" + e);
+		}finally {
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(connection !=null) {
+					connection.close();
+				}
+				}catch(SQLException e) {
+					
+				}
+			}
+		
+			return result;
+	}
+	
+	public boolean update(Long no) {
+		boolean result = false;
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		try {
+			List<BoardVo> vo = findByNo(no);
+			
+			//1. JDBC Driver 로딩 (JDBC Class 로딩: class loader)
+			Class.forName("org.mariadb.jdbc.Driver");
+			
+			//2. 연결하기
+			String url = "jdbc:mysql://192.168.10.46:3306/webdb?charset=utf8";
+			
+			connection = DriverManager.getConnection(url, "webdb", "webdb");
+			
+			//3. SQL 준비
+			String sql = "update board set o_no = o_no+1 where o_no >= ? and g_no=?"; //값을 바인딩시킴. 치환시키는것이 아님!
+			pstmt = connection.prepareStatement(sql);
+			
+			//4. Mapping(bind)
+			pstmt.setLong(1, vo.get(0).getoNo()+1);
+			pstmt.setLong(2, vo.get(0).getgNo());
+		
+			//5. SQL 실생
+			int count = pstmt.executeUpdate();
+			result = count == 1;
+		} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			System.out.println("드라이버 로딩 실패:" + e);
+		}finally {
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(connection !=null) {
+					connection.close();
+				}
+				}catch(SQLException e) {
+					
+				}
+			}
+		
+			return result;
+	}
+	
 	public static boolean delete(BoardVo vo) {
 		boolean result = false;
 		Connection connection = null;

@@ -40,8 +40,13 @@
 							
 					
 						<tr>
-							<td>${vo.no}</td>
-							<td style="text-align:left; padding-left:${(vo.depth-1)*10}0px"><a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no}">${vo.title}</a></td>
+							<td>${count-status.index}</td>
+							<c:if test = '${vo.depth != 1}'>
+								<td style="text-align:left; padding-left:${(vo.depth-1)*5}0px"><img src='${pageContext.servletContext.contextPath }/assets/images/reply.png' /><a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no}">${vo.title}</a></td>
+							</c:if>
+							<c:if test = '${vo.depth == 1}'>
+								<td style="text-align:left; padding-left:${(vo.depth-1)*10}0px"><a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no}">${vo.title}</a></td>
+							</c:if>
 							<td>${vo.userNo}</td>
 							<td>${vo.hit}</td>
 							<td>${vo.regDate}</td>
@@ -51,24 +56,7 @@
 					<br>
 					</c:forEach>	
 					
-					<tr>
-						<td>${vo.no}</td>
-						<td style="text-align:left; padding-left:10px">
-							<img src='${pageContext.servletContext.contextPath }/assets/images/reply.png'/><a href="">두 번째 글입니다.</a></td>
-						<td>안대혁</td>
-						<td>3</td>
-						<td>2015-10-02 12:04:12</td>
-						<td><a href="" class="del">삭제</a></td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td style="text-align:left; padding-left:20px">
-							<img src='${pageContext.servletContext.contextPath }/assets/images/reply.png'/><a href="">첫 번째 글입니다.</a></td>
-						<td>안대혁</td>
-						<td>3</td>
-						<td>2015-09-25 07:24:32</td>
-						<td><a href="" class="del">삭제</a></td>
-					</tr>
+					
 				</table>
 				
 				<!-- pager 추가 -->
@@ -86,8 +74,9 @@
 				<!-- pager 추가 -->
 				
 				<div class="bottom">
+				
 
-					<a href="${pageContext.request.contextPath }/board?a=writeform" id="new-book">글쓰기</a>
+				<a href="${pageContext.request.contextPath }/board?a=writeForm&gNo=${count+1}" id="new-book">글쓰기</a>
 				
 				</div>				
 			</div>

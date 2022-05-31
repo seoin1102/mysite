@@ -19,9 +19,10 @@
 	<div id="container">
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
-		<c:set items='${list}' var='vo' varStatus='status'>	
+		
 			<div id="board" class="board-form">
 				<table class="tbl-ex">
+				<c:forEach items='${list}' var='vo' varStatus='status'>	
 					<tr>
 						<th colspan="2">글보기</th>
 					</tr>
@@ -34,19 +35,18 @@
 						<td>
 							<div class="view-content">
 								${vo.contents}<br>
-								내용 2입니다.<br>
-								내용 3입니다.
 							</div>
 						</td>
 					</tr>
+					</c:forEach>
+					
 				</table>
 				<div class="bottom">
-					<a href="">글목록</a>
-					<a href="">글수정</a>
-					<a href="">답글달기</a>
+					<a href="${pageContext.request.contextPath }/board">글목록</a>
+					<a href="${pageContext.request.contextPath }/board?a=modifyForm&no=${param.no}">글수정</a>
+					<a href="${pageContext.request.contextPath }/board?a=writeForm&no=${param.no}">답글달기</a>
 				</div>
 			</div>
-			</c:set>
 		</div>
 		<c:import url="/WEB-INF/views/includes/navigation.jsp">
 			<c:param name="menu" value="board"/>

@@ -13,16 +13,18 @@ public class BoardActionFactory extends ActionFactory {
 	@Override
 	public Action getAction(String actionName) {
 		Action action = null;
-		if("writeform".equals(actionName)) {
-			action = new WriteformAction();
+		if("writeForm".equals(actionName)) {
+			action = new WriteFormAction();
 		} else if("write".equals(actionName)) {
 			action = new WriteAction();
 		} else if("view".equals(actionName)) {
 			action = new ViewAction();
-		}else if("".equals(actionName)) {
-			action = new Guestbookform();
+		}else if("modify".equals(actionName)) {
+			action = new ModifyAction();
+		}else if("modifyForm".equals(actionName)) {
+			action = new ModifyFormAction();
 		}  else {
-			action = new Boardform();
+			action = new BoardFormAction();
 		}
 		
 		return action;
