@@ -83,7 +83,12 @@ public class BoardRepository {
 		connection = DriverManager.getConnection(url, "webdb", "webdb");
 		
 		//3. Statment 생성
-		String sql = "select * from board order by g_no desc, o_no asc ";
+		String sql = "select a.no, a.title, a.contents, a.hit, \r\n"
+				+ 			"a.reg_date, a.g_no, a.o_no, a.depth, \r\n"
+				+ 			"a.user_no, b.name \r\n"
+				+ 	"from board a, user b \r\n"
+				+ 	"where a.user_no = b.no\r\n"
+				+   "order by g_no desc, o_no asc";
 		pstmt = connection.prepareStatement(sql);
 		
 		//4. SQL 실생
@@ -102,7 +107,7 @@ public class BoardRepository {
 			Long oNo = rs.getLong(7);
 			int depth = rs.getInt(8);
 			Long userNo = rs.getLong(9);
-
+			String userName = rs.getString(10);
 	
 			BoardVo vo = new BoardVo();
 			vo.setNo(no);
@@ -114,6 +119,7 @@ public class BoardRepository {
 			vo.setoNo(oNo);
 			vo.setDepth(depth);
 			vo.setUserNo(userNo);
+			vo.setUserName(userName);
 
 			
 			result.add(vo);
@@ -232,13 +238,14 @@ public class BoardRepository {
 			connection = DriverManager.getConnection(url, "webdb", "webdb");
 			
 			//3. SQL 준비
-			String sql = "update board set title=? , contents=? where no=? "; //값을 바인딩시킴. 치환시키는것이 아님!
+			String sql = "update board set title=? , contents=? ,hit=? where no=? "; //값을 바인딩시킴. 치환시키는것이 아님!
 			pstmt = connection.prepareStatement(sql);
 			
 			//4. Mapping(bind)
 			pstmt.setString(1, vo.getTitle());
 			pstmt.setString(2, vo.getContents());
-			pstmt.setLong(3, vo.getNo());
+			pstmt.setLong(3, vo.getHit());
+			pstmt.setLong(4, vo.getNo());
 		
 			//5. SQL 실생
 			int count = pstmt.executeUpdate();
@@ -325,7 +332,7 @@ public class BoardRepository {
 			connection = DriverManager.getConnection(url, "webdb", "webdb");
 			
 			//3. SQL 준비
-			String sql = "delete from board where g_no=? and oNo=? and user_no=?"; //값을 바인딩시킴. 치환시키는것이 아님!
+			String sql = "delete from board where g_no=? and o_no=? and user_no=?"; //값을 바인딩시킴. 치환시키는것이 아님!
 			pstmt = connection.prepareStatement(sql);
 			
 			//4. Mapping(bind)

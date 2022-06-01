@@ -19,10 +19,9 @@
 	<div id="container">
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
-		
 			<div id="board" class="board-form">
-				<table class="tbl-ex">
 				<c:forEach items='${list}' var='vo' varStatus='status'>	
+				<table class="tbl-ex">
 					<tr>
 						<th colspan="2">글보기</th>
 					</tr>
@@ -38,14 +37,25 @@
 							</div>
 						</td>
 					</tr>
-					</c:forEach>
-					
 				</table>
 				<div class="bottom">
-					<a href="${pageContext.request.contextPath }/board">글목록</a>
-					<a href="${pageContext.request.contextPath }/board?a=modifyForm&no=${param.no}">글수정</a>
-					<a href="${pageContext.request.contextPath }/board?a=writeForm&no=${param.no}">답글달기</a>
+				<c:choose>
+					<c:when test="${empty authUser }">
+						<a href="${pageContext.request.contextPath }/board?end=5">글목록</a>
+						<a href="${pageContext.request.contextPath }/user?a=loginform" id="new-book">글수정</a>
+						<a href="${pageContext.request.contextPath }/user?a=loginform" id="new-book">답글달기</a>
+					</c:when>
+					<c:otherwise>
+						<a href="${pageContext.request.contextPath }/board?end=5">글목록</a>
+						<c:if test = '${vo.userNo == userVo.no}'>
+							<a href="${pageContext.request.contextPath }/board?a=modifyForm&no=${param.no}">글수정</a>
+						</c:if>
+						<a href="${pageContext.request.contextPath }/board?a=writeForm&no=${param.no}">답글달기</a>
+					
+					</c:otherwise>
+				</c:choose>
 				</div>
+				</c:forEach>		
 			</div>
 		</div>
 		<c:import url="/WEB-INF/views/includes/navigation.jsp">

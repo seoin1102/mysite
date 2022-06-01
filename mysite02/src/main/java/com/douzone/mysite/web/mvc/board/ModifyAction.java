@@ -33,26 +33,28 @@ public class ModifyAction implements Action {
 		
 	
 		//request.setCharacterEncoding("utf-8");
-		System.out.println(request.getParameter("title"));
-		System.out.println(request.getParameter("content"));
+
 		String title= request.getParameter("title");
 		String contents = request.getParameter("content");
 		
 		BoardVo vo = new BoardVo();
 		
 		String no2 = request.getParameter("no");
-		System.out.println("확인"+no2);
+
 		long no= Long.parseLong(no2);
-		
+		List<BoardVo> list = new BoardRepository().findByNo(no);
+
 		vo.setTitle(title);
 		vo.setContents(contents);
 		vo.setNo(no);
-	
+		System.out.println(list.get(0).getHit());
+		vo.setHit(list.get(0).getHit());
+		
 		vo.setUserNo(authUser.getNo());
 
 		new BoardRepository().modify(vo);
 	
-		response.sendRedirect(request.getContextPath() + "/board");	
+		response.sendRedirect(request.getContextPath() + "/board?a=view&no="+no);	
 
 
 	}

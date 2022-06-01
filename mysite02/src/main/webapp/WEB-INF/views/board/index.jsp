@@ -19,12 +19,13 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="${pageContext.request.contextPath }/board" method="post">
+				<form id="search_form" action="${pageContext.request.contextPath }/board?end=5" method="post">
 					<input type="text" id="kwd" name="kwd" value="">
 					<input type="submit" value="찾기">
-				</form>
-				<table class="tbl-ex">
 					
+				</form>
+				
+				<table class="tbl-ex">
 					<tr>
 						<th>번호</th>
 						<th>제목</th>
@@ -33,13 +34,13 @@
 						<th>작성일</th>
 						<th>&nbsp;</th>
 					</tr>	
-					
 					<c:set var='count' value='${fn:length(list)}'/> 
-					<c:forEach items='${list}' var='vo' varStatus='status'>	
 					
-							
-					
-						<tr>
+					<c:choose>
+					<c:when test = '${fn:length(param.kwd)>0}'>
+						<c:forEach items='${list}' begin='0' end='${count}' var='vo' varStatus='status'>	
+						<c:if test='${fn:contains(vo.title,param.kwd)}'>
+							<tr>
 							<td>${count-status.index}</td>
 							<c:if test = '${vo.depth != 1}'>
 								<td style="text-align:left; padding-left:${(vo.depth-1)*5}0px"><img src='${pageContext.servletContext.contextPath }/assets/images/reply.png' /><a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no}">${vo.title}</a></td>
@@ -47,36 +48,79 @@
 							<c:if test = '${vo.depth == 1}'>
 								<td style="text-align:left; padding-left:${(vo.depth-1)*10}0px"><a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no}">${vo.title}</a></td>
 							</c:if>
-							<td>${vo.userNo}</td>
+							<td>${vo.userName}</td>
 							<td>${vo.hit}</td>
 							<td>${vo.regDate}</td>
-							<td><a href="" class="del">삭제</a></td>
+							<c:if test = '${vo.userNo == userVo.no}'>
+							<td><a href="${pageContext.request.contextPath }/board?a=delete&gNo=${vo.gNo}&oNo=${vo.oNo}&userNo=${userVo.no}" class="del">삭제</a></td>
+							</c:if>
 						</tr>
+						</c:if>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<c:forEach items='${list}' begin='${param.end-5}' end='${param.end-1}' var='vo' varStatus='status'>	
+					
+						<tr>
+						<td>${count-status.index}</td>
+						<c:if test = '${vo.depth != 1}'>
+							<td style="text-align:left; padding-left:${(vo.depth-1)*5}0px"><img src='${pageContext.servletContext.contextPath }/assets/images/reply.png' /><a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no}">${vo.title}</a></td>
+						</c:if>
+						<c:if test = '${vo.depth == 1}'>
+							<td style="text-align:left; padding-left:${(vo.depth-1)*10}0px"><a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no}">${vo.title}</a></td>
+						</c:if>
+						<td>${vo.userName}</td>
+						<td>${vo.hit}</td>
+						<td>${vo.regDate}</td>
+						<c:if test = '${vo.userNo == userVo.no}'>
+						<td><a href="${pageContext.request.contextPath }/board?a=delete&gNo=${vo.gNo}&oNo=${vo.oNo}&userNo=${userVo.no}" class="del">삭제</a></td>
+						</c:if>
+					</tr>
+						</c:forEach>	
+					</c:otherwise>
+					</c:choose>
 						
 					<br>
-					</c:forEach>	
-					
-					
 				</table>
 				
 				<!-- pager 추가 -->
 				<div class="pager">
 					<ul>
-						<li><a href="">◀</a></li>
-						<li><a href="">1</a></li>
-						<li class="selected">2</li>
-						<li><a href="">3</a></li>
-						<li>4</li>
-						<li>5</li>
-						<li><a href="">▶</a></li>
+						<c:if test= '${param.end-5>0}'>
+							<li><a href="${pageContext.request.contextPath }/board?end=${param.end-5}">◀</a></li>
+						</c:if>
+						<c:forEach begin='1' end='${count/5+1}' step='1' var ='i'>
+						
+						<c:choose>
+							<c:when test='${param.end/5==i}'>
+								<li class="selected"><a href="${pageContext.request.contextPath }/board?end=${i*5}">${i}</a></li>
+					
+							</c:when>
+							<c:otherwise>
+								<li><a href="${pageContext.request.contextPath }/board?end=${i*5}">${i}</a></li>
+							</c:otherwise>
+							
+						</c:choose>
+						</c:forEach>
+						<c:if test= '${param.end<count}'>
+							<li><a href="${pageContext.request.contextPath }/board?end=${param.end+5}">▶</a></li>
+						</c:if>
 					</ul>
 				</div>					
 				<!-- pager 추가 -->
 				
 				<div class="bottom">
 				
-
-				<a href="${pageContext.request.contextPath }/board?a=writeForm&gNo=${count+1}" id="new-book">글쓰기</a>
+				<c:choose>
+					<c:when test="${empty authUser }">
+						<a href="${pageContext.request.contextPath }/user?a=loginform" id="new-book">글쓰기</a>
+					</c:when>
+					<c:otherwise>
+						<a href="${pageContext.request.contextPath }/board?a=writeForm&gNo=${count+1}" id="new-book">글쓰기</a>
+						
+					</c:otherwise>
+				</c:choose>
+			
 				
 				</div>				
 			</div>

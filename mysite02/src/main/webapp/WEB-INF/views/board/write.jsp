@@ -24,6 +24,7 @@
 					<input type = "hidden" name = "a" value="write">
 					<input type = "hidden" name = "no" value="${param.no}">
 					<input type = "hidden" name = "gNo" value="${param.gNo}">
+					<input type = "hidden" name = "end" value="5">
 					
 					
 					<table class="tbl-ex">
@@ -42,7 +43,7 @@
 						</tr>
 					</table>
 					<div class="bottom">
-						<a href="${pageContext.request.contextPath }/board">취소</a>
+						<a href="${pageContext.request.contextPath }/board?end=5">취소</a>
 						<input type="submit" value="등록">
 					</div>
 				</form>				

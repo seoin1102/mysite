@@ -30,25 +30,16 @@ public class ModifyFormAction implements Action {
 			}
 		
 	
-		//request.setCharacterEncoding("utf-8");
-		System.out.println(request.getParameter("title"));
-		System.out.println(request.getParameter("content"));
-		String title= request.getParameter("title");
-		String contents = request.getParameter("content");
 		
-		BoardVo vo = new BoardVo();
+	
 		
 		String no2 = request.getParameter("no");
 		System.out.println("확인"+no2);
 		long no= Long.parseLong(no2);
 		
-		vo.setTitle(title);
-		vo.setContents(contents);
-		vo.setNo(no);
-	
-		vo.setUserNo(authUser.getNo());
+		List<BoardVo> list = new BoardRepository().findByNo(no);
 
-		List<BoardVo> list = new BoardRepository().modify(vo);
+
 		request.setAttribute("list",list);
 		WebUtil.forward(request, response,"board/modify");
 

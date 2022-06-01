@@ -1,9 +1,7 @@
 package com.douzone.mysite.web.mvc.board;
 
 
-import com.douzone.mysite.web.mvc.guestbook.DeleteSuccess;
-import com.douzone.mysite.web.mvc.guestbook.Deleteform;
-import com.douzone.mysite.web.mvc.guestbook.Guestbookform;
+
 import com.douzone.mysite.web.mvc.main.DefaultAction;
 import com.douzone.web.mvc.Action;
 import com.douzone.web.mvc.ActionFactory;
@@ -23,8 +21,12 @@ public class BoardActionFactory extends ActionFactory {
 			action = new ModifyAction();
 		}else if("modifyForm".equals(actionName)) {
 			action = new ModifyFormAction();
+		}else if("delete".equals(actionName)) {
+			action = new DeleteAction();
+		}else if("guestIndex".equals(actionName)) {
+			action = new GuestIndexAction();
 		}  else {
-			action = new BoardFormAction();
+			action = new IndexAction();
 		}
 		
 		return action;

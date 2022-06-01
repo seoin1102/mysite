@@ -91,9 +91,8 @@ public class WriteAction implements Action {
 				
 			}
 		
-		response.sendRedirect(request.getContextPath() + "/board");	
+		response.sendRedirect(request.getContextPath() + "/board?end=5");	
 		
-		//WebUtil.forward(request, response,"board/");
 
 
 	}
