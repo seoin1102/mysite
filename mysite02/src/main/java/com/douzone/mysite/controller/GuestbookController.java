@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.douzone.mysite.web.mvc.guestbook.GuestbookActionFactory;
-import com.douzone.mysite.web.mvc.user.UserActionFactory;
 import com.douzone.web.mvc.Action;
 import com.douzone.web.mvc.ActionFactory;
 
@@ -16,8 +15,7 @@ public class GuestbookController extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// request.setCharacterEncoding("utf-8");
-		// Encoding Filter 에서 처리
+	
 		
 		String actioName = request.getParameter("a");
 		
