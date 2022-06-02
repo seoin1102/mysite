@@ -1,8 +1,5 @@
 package com.douzone.mysite.web.mvc.board;
 
-
-
-import com.douzone.mysite.web.mvc.main.DefaultAction;
 import com.douzone.web.mvc.Action;
 import com.douzone.web.mvc.ActionFactory;
 

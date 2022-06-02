@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,11 +38,9 @@ public class WriteAction implements Action {
 		Long hit = 0L;
 		String regDate = now.format(formatter).toString();
 		BoardVo vo = new BoardVo();
-		UserVo userVo = new UserVo();
-		System.out.println("no?"+request.getParameter("no"));
+		
 		if(request.getParameter("no").length()>0) {
-			System.out.println("no???"+request.getParameter("no"));
-
+			
 			String no2 = request.getParameter("no");
 			long no= Long.parseLong(no2);
 	
@@ -73,7 +70,7 @@ public class WriteAction implements Action {
 			
 			System.out.println("writeaction-"+request.getParameter("gNo"));
 
-			Long gNo= Long.parseLong(gNo2);
+			Long gNo= Long.parseLong(gNo2)+1L;
 	
 			Long oNo = 1L;
 			int depth = 1;

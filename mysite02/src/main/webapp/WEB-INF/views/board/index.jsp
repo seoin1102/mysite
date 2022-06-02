@@ -83,7 +83,7 @@
 					</c:choose>
 					</c:if>
 						
-					<br>
+				
 				</table>
 				
 				<!-- pager 추가 -->
@@ -96,8 +96,7 @@
 						
 						<c:choose>
 							<c:when test='${param.end/5==i}'>
-								<li class="selected"><a href="${pageContext.request.contextPath }/board?end=${i*5}">${i}</a></li>
-					
+								<li class="selected" >${i}</li>
 							</c:when>
 							<c:otherwise>
 								<li><a href="${pageContext.request.contextPath }/board?end=${i*5}">${i}</a></li>
@@ -119,7 +118,7 @@
 						<a href="${pageContext.request.contextPath }/user?a=loginform" id="new-book">글쓰기</a>
 					</c:when>
 					<c:otherwise>
-						<a href="${pageContext.request.contextPath }/board?a=writeForm&gNo=${count+1}" id="new-book">글쓰기</a>
+						<a href="${pageContext.request.contextPath }/board?a=writeForm&gNo=${count}" id="new-book">글쓰기</a>
 						
 					</c:otherwise>
 				</c:choose>

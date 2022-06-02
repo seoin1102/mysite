@@ -3,7 +3,6 @@ package com.douzone.mysite.web.mvc.board;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,11 +25,7 @@ public class WriteFormAction implements Action {
 			request.setAttribute("list",list);
 		}
 
-		if(request.getParameter("gNo") != null) {
-			String gNo2 = request.getParameter("gNo");
-			long gNo= Long.parseLong(gNo2);
-	
-		}
+		
 		WebUtil.forward(request, response,"board/write");
 
 
