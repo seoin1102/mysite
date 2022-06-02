@@ -59,6 +59,8 @@
 						</c:if>
 						</c:forEach>
 					</c:when>
+					
+					
 					<c:otherwise>
 						<c:forEach items='${list}' begin='${param.end-5}' end='${param.end-1}' var='vo' varStatus='status'>	
 					
@@ -82,8 +84,6 @@
 					
 					</c:choose>
 					</c:if>
-						
-				
 				</table>
 				
 				<!-- pager 추가 -->
@@ -92,15 +92,15 @@
 						<c:if test= '${param.end-5>0}'>
 							<li><a href="${pageContext.request.contextPath }/board?end=${param.end-5}">◀</a></li>
 						</c:if>
-						<c:forEach begin='1' end='${count/5+1}' step='1' var ='i'>
+						<c:forEach begin='${param.end/5}' end='${param.end/5+4}' step='1' var ='i'>
 						
 						<c:choose>
 							<c:when test='${param.end/5==i}'>
 								<li class="selected" >${i}</li>
 							</c:when>
-							<c:otherwise>
+							<c:when test = '${param.end<count}'>
 								<li><a href="${pageContext.request.contextPath }/board?end=${i*5}">${i}</a></li>
-							</c:otherwise>
+							</c:when>
 							
 						</c:choose>
 						</c:forEach>
@@ -112,13 +112,13 @@
 				<!-- pager 추가 -->
 				
 				<div class="bottom">
-				
+				<c:set var='max' value='${list.get(0).gNo}'/> 
 				<c:choose>
 					<c:when test="${empty authUser }">
 						<a href="${pageContext.request.contextPath }/user?a=loginform" id="new-book">글쓰기</a>
 					</c:when>
 					<c:otherwise>
-						<a href="${pageContext.request.contextPath }/board?a=writeForm&gNo=${count}" id="new-book">글쓰기</a>
+						<a href="${pageContext.request.contextPath }/board?a=writeForm&gNo=${max}" id="new-book">글쓰기</a>
 						
 					</c:otherwise>
 				</c:choose>

@@ -44,7 +44,6 @@ public class BoardRepository {
 			int count = pstmt.executeUpdate();
 			result = count == 1;
 		} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패:" + e);
@@ -90,8 +89,6 @@ public class BoardRepository {
 		pstmt = connection.prepareStatement(sql);
 		
 		//4. SQL 실생
-		
-
 		rs = pstmt.executeQuery();
 		
 		//5. 결과처리
@@ -295,7 +292,6 @@ public class BoardRepository {
 			int count = pstmt.executeUpdate();
 			result = count == 1;
 		} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패:" + e);
@@ -341,7 +337,6 @@ public class BoardRepository {
 			int count = pstmt.executeUpdate();
 			result = count == 1;
 		} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패:" + e);
