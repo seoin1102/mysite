@@ -98,9 +98,12 @@
 							<c:when test='${param.end/5==i}'>
 								<li class="selected" >${i}</li>
 							</c:when>
-							<c:when test = '${param.end<count}'>
+							<c:when test = '${count/5+1>i}'>
 								<li><a href="${pageContext.request.contextPath }/board?end=${i*5}">${i}</a></li>
 							</c:when>
+							<c:otherwise>
+								<li>${i}</li>
+							</c:otherwise>
 							
 						</c:choose>
 						</c:forEach>
