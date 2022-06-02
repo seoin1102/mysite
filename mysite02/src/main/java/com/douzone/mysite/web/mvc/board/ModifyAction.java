@@ -1,9 +1,6 @@
 package com.douzone.mysite.web.mvc.board;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -42,13 +39,13 @@ public class ModifyAction implements Action {
 		String no2 = request.getParameter("no");
 
 		long no= Long.parseLong(no2);
-		List<BoardVo> list = new BoardRepository().findByNo(no);
+		BoardVo list = new BoardRepository().findByNo(no);
 
 		vo.setTitle(title);
 		vo.setContents(contents);
 		vo.setNo(no);
-		System.out.println(list.get(0).getHit());
-		vo.setHit(list.get(0).getHit());
+		System.out.println(list.getHit());
+		vo.setHit(list.getHit());
 		
 		vo.setUserNo(authUser.getNo());
 

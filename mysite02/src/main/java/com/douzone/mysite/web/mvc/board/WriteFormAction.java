@@ -21,7 +21,7 @@ public class WriteFormAction implements Action {
 			String no2 = request.getParameter("no");
 			long no= Long.parseLong(no2)+1L;
 	
-			List<BoardVo> list = new BoardRepository().findByNo(no);
+			BoardVo list = new BoardRepository().findByNo(no);
 			request.setAttribute("list",list);
 		}
 

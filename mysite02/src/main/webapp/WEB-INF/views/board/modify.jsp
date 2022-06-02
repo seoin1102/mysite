@@ -27,21 +27,20 @@
 						<tr>
 							<th colspan="2">글수정</th>
 						</tr>
-						<c:forEach items='${list}' var='vo' varStatus='status'>	
-						
+					
 						<tr>
 							<td class="label">제목</td>
-							<td><input type="text" name="title" value="${vo.title}"></td>
+							<td><input type="text" name="title" value="${list.title}"></td>
 						</tr>
 						<tr>
 							<td class="label">내용</td>
 							<td>
 								<textarea id="content" name="content" >
-								${vo.contents}
+								${list.contents}
 								</textarea>
 							</td>
 						</tr>
-						</c:forEach>
+					
 					</table>
 					<div class="bottom">
 						<a href="${pageContext.request.contextPath }/board?end=5">취소</a>

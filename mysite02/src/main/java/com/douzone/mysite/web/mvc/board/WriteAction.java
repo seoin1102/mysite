@@ -44,12 +44,12 @@ public class WriteAction implements Action {
 			String no2 = request.getParameter("no");
 			long no= Long.parseLong(no2);
 	
-			List<BoardVo> list = new BoardRepository().findByNo(no);
+			BoardVo list = new BoardRepository().findByNo(no);
 			
 	
-			Long gNo = list.get(0).getgNo();
-			Long oNo = list.get(0).getoNo()+1;
-			int depth = list.get(0).getDepth()+1;
+			Long gNo = list.getgNo();
+			Long oNo = list.getoNo()+1;
+			int depth = list.getDepth()+1;
 	
 			vo.setTitle(title);
 			vo.setContents(contents);
@@ -67,11 +67,8 @@ public class WriteAction implements Action {
 			}
 		if(request.getParameter("gNo").length()>0)  {
 			String gNo2 = request.getParameter("gNo");
-			
-			System.out.println("writeaction-"+request.getParameter("gNo"));
 
 			Long gNo= Long.parseLong(gNo2)+1L;
-	
 			Long oNo = 1L;
 			int depth = 1;
 			

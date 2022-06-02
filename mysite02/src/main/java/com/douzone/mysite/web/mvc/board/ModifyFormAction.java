@@ -37,7 +37,7 @@ public class ModifyFormAction implements Action {
 		System.out.println("확인"+no2);
 		long no= Long.parseLong(no2);
 		
-		List<BoardVo> list = new BoardRepository().findByNo(no);
+		BoardVo list = new BoardRepository().findByNo(no);
 
 
 		request.setAttribute("list",list);

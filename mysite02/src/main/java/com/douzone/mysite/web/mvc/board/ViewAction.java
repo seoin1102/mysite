@@ -23,7 +23,7 @@ public class ViewAction implements Action {
 		String no2 = request.getParameter("no");
 		long no= Long.parseLong(no2);
 
-		List<BoardVo> list = new BoardRepository().findByNo(no);
+		BoardVo list = new BoardRepository().findByNo(no);
 		request.setAttribute("list",list);
 		// 접근제어/ 로그인하고 들어오도록 메인으로 보내버림.
 		/////////////////////////////////////////////////////////////////////
@@ -32,13 +32,13 @@ public class ViewAction implements Action {
 			return;
 		}
 		
-		long hit = list.get(0).getHit()+1l;
+		long hit = list.getHit()+1l;
 		System.out.println(hit);
 		session.setAttribute("hit", hit);
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		BoardVo vo = new BoardVo();
-		vo.setTitle(list.get(0).getTitle());
-		vo.setContents(list.get(0).getContents());
+		vo.setTitle(list.getTitle());
+		vo.setContents(list.getContents());
 		vo.setNo(no);
 		vo.setHit(hit);
 		new BoardRepository().modify(vo);

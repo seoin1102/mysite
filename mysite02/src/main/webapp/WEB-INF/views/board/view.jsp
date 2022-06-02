@@ -20,20 +20,20 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board" class="board-form">
-				<c:forEach items='${list}' var='vo' varStatus='status'>	
+				
 				<table class="tbl-ex">
 					<tr>
 						<th colspan="2">글보기</th>
 					</tr>
 					<tr>
 						<td class="label">제목</td>
-						<td>${vo.title}</td>
+						<td>${list.title}</td>
 					</tr>
 					<tr>
 						<td class="label">내용</td>
 						<td>
 							<div class="view-content">
-								${vo.contents}<br>
+								${list.contents}<br>
 							</div>
 						</td>
 					</tr>
@@ -47,7 +47,7 @@
 					</c:when>
 					<c:otherwise>
 						<a href="${pageContext.request.contextPath }/board?end=5">글목록</a>
-						<c:if test = '${vo.userNo == userVo.no}'>
+						<c:if test = '${list.userNo == userVo.no}'>
 							<a href="${pageContext.request.contextPath }/board?a=modifyForm&no=${param.no}">글수정</a>
 						</c:if>
 						<a href="${pageContext.request.contextPath }/board?a=writeForm&no=${param.no}">답글달기</a>
@@ -55,7 +55,7 @@
 					</c:otherwise>
 				</c:choose>
 				</div>
-				</c:forEach>		
+					
 			</div>
 		</div>
 		<c:import url="/WEB-INF/views/includes/navigation.jsp">

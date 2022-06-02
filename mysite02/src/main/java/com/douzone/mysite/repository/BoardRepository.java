@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.douzone.mysite.vo.BoardVo;
-import com.douzone.mysite.vo.GuestbookVo;
-
 
 
 public class BoardRepository {
@@ -147,8 +145,8 @@ public class BoardRepository {
 			
 		return result;
 }
-	public List<BoardVo> findByNo(long no) {
-		List<BoardVo> result = new ArrayList<>();
+	public BoardVo findByNo(long no) {
+		BoardVo result = null;
 		Connection connection = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs= null;
@@ -170,11 +168,10 @@ public class BoardRepository {
 
 		//4. SQL 실생
 		
-
 		rs = pstmt.executeQuery();
 		
 		//5. 결과처리
-		while(rs.next()) {
+		if(rs.next()) {
 			String title = rs.getString(2);
 			String contents = rs.getString(3);
 			Long hit = rs.getLong(4);
@@ -197,7 +194,7 @@ public class BoardRepository {
 			vo.setUserNo(userNo);
 
 			
-			result.add(vo);
+			result=vo;
 		}
 	} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -222,8 +219,8 @@ public class BoardRepository {
 			
 		return result;
 }
-	public List<BoardVo> modify(BoardVo vo) {
-		List<BoardVo> result = null;
+	public BoardVo modify(BoardVo vo) {
+		BoardVo result = null;
 		Connection connection = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -276,7 +273,7 @@ public class BoardRepository {
 		Connection connection = null;
 		PreparedStatement pstmt = null;
 		try {
-			List<BoardVo> vo = findByNo(no);
+			BoardVo vo = findByNo(no);
 			
 			//1. JDBC Driver 로딩 (JDBC Class 로딩: class loader)
 			Class.forName("org.mariadb.jdbc.Driver");
@@ -291,8 +288,8 @@ public class BoardRepository {
 			pstmt = connection.prepareStatement(sql);
 			
 			//4. Mapping(bind)
-			pstmt.setLong(1, vo.get(0).getoNo()+1);
-			pstmt.setLong(2, vo.get(0).getgNo());
+			pstmt.setLong(1, vo.getoNo()+1);
+			pstmt.setLong(2, vo.getgNo());
 		
 			//5. SQL 실생
 			int count = pstmt.executeUpdate();
