@@ -37,6 +37,7 @@
 					<c:set var='count' value='${fn:length(list)}'/> 
 					
 					<c:choose>
+					<c: if test = '${param.end >0}'>
 					<c:when test = '${fn:length(param.kwd)>0}'>
 						<c:forEach items='${list}' begin='0' end='${count}' var='vo' varStatus='status'>	
 						<c:if test='${fn:contains(vo.title,param.kwd)}'>
@@ -78,6 +79,7 @@
 					</tr>
 						</c:forEach>	
 					</c:otherwise>
+					</c:>
 					</c:choose>
 						
 					<br>
