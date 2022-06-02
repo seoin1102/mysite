@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.douzone.mysite.vo.BoardVo;
+import com.douzone.mysite.vo.GuestbookVo;
+
 
 
 public class BoardRepository {
@@ -246,6 +248,7 @@ public class BoardRepository {
 			pstmt.setLong(4, vo.getNo());
 		
 			//5. SQL 실생
+			int count = pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
 				// TODO Auto-generated catch block
