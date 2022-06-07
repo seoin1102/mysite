@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.douzone.mysite.repository.GuestbookRepository;
 import com.douzone.mysite.vo.GuestbookVo;
@@ -17,7 +18,11 @@ public class GuestbookService {
 	
 	}
 	
-	public boolean deleteMessage(GuestbookVo vo) {
+	public boolean deleteMessage(Long no, String password) {
+		GuestbookVo vo = new GuestbookVo();
+		vo.setNo(no);
+		vo.setPassword(password);
+		
 		return guestbookRepository.delete(vo);
 	}
 	

@@ -2,7 +2,6 @@ package com.douzone.mysite.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.douzone.mysite.repository.GuestbookRepository;
 import com.douzone.mysite.service.GuestbookService;
 import com.douzone.mysite.vo.GuestbookVo;
 
@@ -38,11 +36,8 @@ public class GuestbookController {
 	@RequestMapping(value = "/delete/{no}", method = RequestMethod.POST)
 	public String delete(@PathVariable("no") Long no,
 						@RequestParam(value="password", required=true, defaultValue="")String password) {
-		System.out.println(no);
-		GuestbookVo vo = new GuestbookVo();
-		vo.setNo(no);
-		vo.setPassword(password);
-		guestbookService.deleteMessage(vo);
+		
+		guestbookService.deleteMessage(no, password);
 		return "redirect:/guestbook/";
 		}
 	
