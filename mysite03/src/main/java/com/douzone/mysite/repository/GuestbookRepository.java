@@ -5,13 +5,17 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.stereotype.Repository;
 
 import com.douzone.mysite.vo.GuestbookVo;
 
 
-
+@Repository
 public class GuestbookRepository {
 	public static boolean insert(GuestbookVo vo) {
 		boolean result = false;
@@ -26,6 +30,10 @@ public class GuestbookRepository {
 			
 			connection = DriverManager.getConnection(url, "webdb", "webdb");
 			
+			LocalDateTime now = LocalDateTime.now();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+			String datetime = now.format(formatter).toString();
+			
 			//3. SQL 준비
 			String sql = "insert into guestbook values(null, ?, ?, ?, ?)"; //값을 바인딩시킴. 치환시키는것이 아님!
 			pstmt = connection.prepareStatement(sql);
@@ -34,7 +42,7 @@ public class GuestbookRepository {
 			pstmt.setString(1, vo.getName());
 			pstmt.setString(2, vo.getPassword());
 			pstmt.setString(3, vo.getMessage());
-			pstmt.setString(4, vo.getDatetime());
+			pstmt.setString(4, datetime);
 
 
 			//5. SQL 실생
