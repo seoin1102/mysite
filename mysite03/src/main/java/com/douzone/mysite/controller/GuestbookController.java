@@ -39,13 +39,13 @@ public class GuestbookController {
 						@RequestParam(value="password", required=true, defaultValue="")String password) {
 		
 		guestbookService.deleteMessage(no, password);
-		return "redirect:/guestbook/";
+		return "redirect:/guestbook";
 		}
 	
 	@RequestMapping(value="", method=RequestMethod.POST)
 	public String add(GuestbookVo vo) {
 		guestbookService.addMessage(vo);
-		return "redirect:/guestbook/";
+		return "redirect:/guestbook";
 	}
 	
 //	@ExceptionHandler(Exception.class)
