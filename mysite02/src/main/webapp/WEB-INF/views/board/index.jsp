@@ -44,16 +44,16 @@
 							<tr>
 							<td>${count-status.index}</td>
 							<c:if test = '${vo.depth != 1}'>
-								<td style="text-align:left; padding-left:${(vo.depth-1)*5}0px"><img src='${pageContext.servletContext.contextPath }/assets/images/reply.png' /><a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no}">${vo.title}</a></td>
+								<td style="text-align:left; padding-left:${(vo.depth-1)*5}0px"><img src='${pageContext.servletContext.contextPath }/assets/images/reply.png' /><a href="${pageContext.request.contextPath }/board/view/${vo.no}">${vo.title}</a></td>
 							</c:if>
 							<c:if test = '${vo.depth == 1}'>
-								<td style="text-align:left; padding-left:${(vo.depth-1)*10}0px"><a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no}">${vo.title}</a></td>
+								<td style="text-align:left; padding-left:${(vo.depth-1)*10}0px"><a href="${pageContext.request.contextPath }/board/view/${vo.no}">${vo.title}</a></td>
 							</c:if>
 							<td>${vo.userName}</td>
 							<td>${vo.hit}</td>
 							<td>${vo.regDate}</td>
 							<c:if test = '${vo.userNo == userVo.no}'>
-							<td><a href="${pageContext.request.contextPath }/board?a=delete&gNo=${vo.gNo}&oNo=${vo.oNo}&userNo=${userVo.no}" class="del">삭제</a></td>
+							<td><a href="${pageContext.request.contextPath }/board/delete&/${vo.gNo}/${vo.oNo}/${userVo.no}" class="del">삭제</a></td>
 							</c:if>
 						</tr>
 						</c:if>
@@ -67,10 +67,10 @@
 						<tr>
 						<td>${count-status.index}</td>
 						<c:if test = '${vo.depth != 1}'>
-							<td style="text-align:left; padding-left:${(vo.depth-1)*5}0px"><img src='${pageContext.servletContext.contextPath }/assets/images/reply.png' /><a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no}">${vo.title}</a></td>
+							<td style="text-align:left; padding-left:${(vo.depth-1)*5}0px"><img src='${pageContext.servletContext.contextPath }/assets/images/reply.png' /><a href="${pageContext.request.contextPath }/board/view/${vo.no}">${vo.title}</a></td>
 						</c:if>
 						<c:if test = '${vo.depth == 1}'>
-							<td style="text-align:left; padding-left:${(vo.depth-1)*10}0px"><a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no}">${vo.title}</a></td>
+							<td style="text-align:left; padding-left:${(vo.depth-1)*10}0px"><a href="${pageContext.request.contextPath }/board/view/${vo.no}">${vo.title}</a></td>
 						</c:if>
 						<td>${vo.userName}</td>
 						<td>${vo.hit}</td>

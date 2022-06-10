@@ -25,13 +25,13 @@
 					</tr>
 					<tr>
 						<td class="label">제목</td>
-						<td>${list.title}</td>
+						<td>${vo.title}</td>
 					</tr>
 					<tr>
 						<td class="label">내용</td>
 						<td>
 							<div class="view-content">
-								${list.contents}<br>
+								${vo.contents}<br>
 							</div>
 						</td>
 					</tr>
@@ -39,16 +39,16 @@
 				<div class="bottom">
 				<c:choose>
 					<c:when test="${empty authUser }">
-						<a href="${pageContext.request.contextPath }/board?end=5">글목록</a>
-						<a href="${pageContext.request.contextPath }/user?a=loginform" id="new-book">글수정</a>
-						<a href="${pageContext.request.contextPath }/user?a=loginform" id="new-book">답글달기</a>
+						<a href="${pageContext.request.contextPath }/board">글목록</a>
+						<a href="${pageContext.request.contextPath }/user/login" id="new-book">글수정</a>
+						<a href="${pageContext.request.contextPath }/user/login" id="new-book">답글달기</a>
 					</c:when>
 					<c:otherwise>
-						<a href="${pageContext.request.contextPath }/board?end=5">글목록</a>
-						<c:if test = '${list.userNo == userVo.no}'>
-							<a href="${pageContext.request.contextPath }/board?a=modifyForm&no=${param.no}">글수정</a>
+						<a href="${pageContext.request.contextPath }/board">글목록</a>
+						<c:if test = '${vo.userNo == userVo.no}'>
+							<a href="${pageContext.request.contextPath }/board?a=modifyForm&no=${no}">글수정</a>
 						</c:if>
-						<a href="${pageContext.request.contextPath }/board?a=writeForm&no=${param.no}">답글달기</a>
+						<a href="${pageContext.request.contextPath }/board?a=writeForm&no=${no}">답글달기</a>
 					
 					</c:otherwise>
 				</c:choose>
