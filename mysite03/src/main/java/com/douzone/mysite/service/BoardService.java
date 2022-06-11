@@ -24,5 +24,18 @@ public class BoardService {
 	public boolean deleteMessage(Long gNo, Long oNo, Long userNo) {
 		return boardrepository.delete(gNo, oNo, userNo);
 	}
+	
+	public boolean write(BoardVo vo) {
+		
+		return boardrepository.insert(vo);
+
+	}
+	public boolean update(BoardVo vo) {
+		return boardrepository.update(vo);
+	}
+	
+	public boolean updateHit(BoardVo vo) {
+		return boardrepository.updateHit(vo);
+	}
 
 }

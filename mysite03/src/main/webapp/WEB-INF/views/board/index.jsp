@@ -21,7 +21,7 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="${pageContext.request.contextPath }/board/page/5" method="post">
+				<form id="search_form" action="${pageContext.request.contextPath }/board" method="get">
 					<input type="text" id="kwd" name="kwd" value=""> 
 					<input type="submit" value="찾기">
 
@@ -60,7 +60,7 @@
 											<td>${vo.hit}</td>
 											<td>${vo.regDate}</td>
 											<c:if test='${vo.userNo == userVo.no}'>
-												<td><a href="${pageContext.request.contextPath }/board/delete&gNo=${vo.gNo}&oNo=${vo.oNo}&userNo=${userVo.no}" class="del">삭제</a></td>
+												<td><a href="${pageContext.request.contextPath }/board/delete/${vo.gNo}/${vo.oNo}/${userVo.no}" class="del">삭제</a></td>
 											</c:if>
 										</tr>
 									</c:if>
@@ -87,7 +87,7 @@
 										<td>${vo.hit}</td>
 										<td>${vo.regDate}</td>
 										<c:if test='${vo.userNo == userVo.no}'>
-											<td><a href="${pageContext.request.contextPath }/board/delete&gNo=${vo.gNo}&oNo=${vo.oNo}&userNo=${userVo.no}" class="del">삭제</a></td>
+											<td><a href="${pageContext.request.contextPath }/board/delete/${vo.gNo}/${vo.oNo}/${userVo.no}" class="del">삭제</a></td>
 										</c:if>
 									</tr>
 								</c:forEach>
@@ -129,11 +129,11 @@
 					<c:set var='max' value='${list.get(0).gNo}' />
 					<c:choose>
 						<c:when test="${empty authUser }">
-							<a href="${pageContext.request.contextPath }/user?a=loginform"
+							<a href="${pageContext.request.contextPath }/user/login"
 								id="new-book">글쓰기</a>
 						</c:when>
 						<c:otherwise>
-							<a href="${pageContext.request.contextPath }/board?a=writeForm&gNo=${max}" id="new-book">글쓰기</a>
+							<a href="${pageContext.request.contextPath }/board/write/${max}" id="new-book">글쓰기</a>
 
 						</c:otherwise>
 					</c:choose>

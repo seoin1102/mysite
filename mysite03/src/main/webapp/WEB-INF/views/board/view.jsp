@@ -46,9 +46,9 @@
 					<c:otherwise>
 						<a href="${pageContext.request.contextPath }/board">글목록</a>
 						<c:if test = '${vo.userNo == userVo.no}'>
-							<a href="${pageContext.request.contextPath }/board?a=modifyForm&no=${no}">글수정</a>
+							<a href="${pageContext.request.contextPath }/board/modify/${vo.no}">글수정</a>
 						</c:if>
-						<a href="${pageContext.request.contextPath }/board?a=writeForm&no=${no}">답글달기</a>
+						<a href="${pageContext.request.contextPath }/board/write/${vo.gNo}/${vo.oNo}/${vo.depth}">답글달기</a>
 					
 					</c:otherwise>
 				</c:choose>

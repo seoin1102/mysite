@@ -41,5 +41,16 @@ public class BoardRepository {
 	public BoardVo findByNo(long no) {
 		return sqlSession.selectOne("board.findByNo", no);
 	}
+	
+	public boolean insert(BoardVo vo) {
+		return sqlSession.insert("board.insert", vo)==1;
+	}
 
+	public boolean update(BoardVo vo) {
+		return sqlSession.update("board.update", vo)==1;
+	}
+	
+	public boolean updateHit(BoardVo vo) {
+		return sqlSession.update("board.updateHit", vo)==1;
+	}
 }
