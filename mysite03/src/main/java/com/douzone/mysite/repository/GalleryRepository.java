@@ -34,11 +34,8 @@ public class GalleryRepository {
 		return sqlSession.selectList("gallery.findAll");
 	}
 
-	public boolean delete(Long no, String password) {
-		Map<String, Object> map = new HashMap<>();
-		map.put("no", no);
-		map.put("password", password);
-		return sqlSession.delete("gallery.delete",map)==1;
+	public boolean delete(Long no) {
+		return sqlSession.delete("gallery.delete",no)==1;
 	}
 	
 	public boolean insert(String url, String comments) {
@@ -50,6 +47,7 @@ public class GalleryRepository {
 		//System.out.println("갤러리 인서트"+vo);
 		return result;
 	}
+
 
 	
 

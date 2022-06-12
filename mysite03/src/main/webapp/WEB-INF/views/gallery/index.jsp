@@ -61,7 +61,7 @@ $(function(){
 								class="image"
 								style="background-image:url('${pageContext.request.contextPath }${vo.url}')">&nbsp;</a>
 								
-							<a	href="${pageContext.request.contextPath }/gallery/delete/1"
+							<a	href="${pageContext.request.contextPath }/gallery/delete/${vo.no}"
 								class="del-button"
 								title="삭제">삭제</a>
 						</li>

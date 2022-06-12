@@ -19,10 +19,12 @@ public class GalleryService {
 	}
 	
 	public Boolean removeImages(Long no) {
-		return false;
+		return galleryRepository.delete(no);
 	}
 	
 	public Boolean insert(String url, String comments) {
 		return galleryRepository.insert(url,comments);
 	}
+
+
 }

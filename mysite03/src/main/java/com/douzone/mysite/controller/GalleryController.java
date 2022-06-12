@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,7 +26,7 @@ public class GalleryController {
 	@Autowired
 	private GalleryService galleryService;
 	
-	@RequestMapping(value = "", method = RequestMethod.GET)
+	@RequestMapping(value = {"", "/upload"}, method = RequestMethod.GET)
 	public String index(Model model) {
 		List<GalleryVo> list = galleryService.getImages();
 		model.addAttribute("list",list);
@@ -37,13 +38,19 @@ public class GalleryController {
 		@RequestParam(value="comments", required=true, defaultValue="") String comments,
 		@RequestParam("file") MultipartFile multipartFile,
 		Model model) {
-		System.out.println("comments:" + comments);
-
 		String url = fileUploadService.restore(multipartFile);
 		
 		galleryService.insert(url, comments);
 
 		model.addAttribute("url", url);
-		return "gallery/index";
+		return "redirect:/gallery";
+	}
+	
+	@RequestMapping(value="/delete/{no}", method=RequestMethod.GET)
+	public String delete(@PathVariable("no") Long no) {
+		
+		galleryService.removeImages(no);
+
+		return "redirect:/gallery";
 	}
 }
