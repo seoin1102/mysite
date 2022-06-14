@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.douzone.mysite.repository.UserRepository;
+import com.douzone.mysite.security.Auth;
+import com.douzone.mysite.security.AuthUser;
 import com.douzone.mysite.service.BoardService;
 import com.douzone.mysite.service.GuestbookService;
 import com.douzone.mysite.vo.BoardVo;
@@ -29,45 +31,25 @@ public class BoardController {
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String index(HttpSession session,  Model model) {
+	@RequestMapping("")
+	public String index(@AuthUser UserVo authUser,  Model model) {
 		List<BoardVo> list = boardService.getIndex();
 		model.addAttribute("list",list);
-		if(session == null) {
-			return "board/index";
-		}
-		UserVo authUser= (UserVo)session.getAttribute("authUser");
-		
-		if(authUser == null) {
-			return "board/index";
-		}
-		UserVo userVo = userService.getUser(authUser.getNo());
-		model.addAttribute("userVo", userVo);
 		
 		return "board/index";
 	}
 	
 	@RequestMapping(value = "/page/{end}", method = RequestMethod.GET)
-	public String index(HttpSession session,@PathVariable("end") int end, Model model) {
+	public String index(@AuthUser UserVo authUser,@PathVariable("end") int end, Model model) {
 		List<BoardVo> list = boardService.getIndex();
 		model.addAttribute("end",end);
 		model.addAttribute("list",list);
-		if(session == null) {
-			return "board/index";
-		}
-		UserVo authUser= (UserVo)session.getAttribute("authUser");
-		
-		if(authUser == null) {
-			return "board/index";
-		}
-		UserVo userVo = userService.getUser(authUser.getNo());
-		model.addAttribute("userVo", userVo);
-		
+
 		return "board/index";
 	}
 	
 	@RequestMapping(value = "/view/{no}", method = RequestMethod.GET)
-	public String view(HttpSession session, @PathVariable("no") long no, Model model) {
+	public String view(UserVo authUser, @PathVariable("no") long no, Model model) {
 		BoardVo vo = boardService.getView(no);
 		vo.setHit(vo.getHit()+1);
 		System.out.println("HIT!!!"+vo.getHit());
@@ -75,13 +57,7 @@ public class BoardController {
 		model.addAttribute("no",no);
 		model.addAttribute("vo",vo);
 		
-		if(session == null) {
-			return "board/view";
-		}
-		UserVo authUser= (UserVo)session.getAttribute("authUser");
-		if(authUser == null) {
-			return "board/view";
-		}
+
 		UserVo userVo = userService.getUser(authUser.getNo());
 		model.addAttribute("userVo", userVo);
 		
@@ -89,12 +65,15 @@ public class BoardController {
 		return "board/view";
 	}
 	
+	@Auth
 	@RequestMapping(value = "/delete/{gNo}/{oNo}/{userNo}", method = RequestMethod.GET)
-	public String delete(@PathVariable("gNo") long gNo, @PathVariable("oNo") long oNo, @PathVariable("userNo") long userNo) {
-		boardService.deleteMessage(gNo, oNo, userNo);
+	public String delete(@AuthUser UserVo authUser, @PathVariable("gNo") long gNo, @PathVariable("oNo") long oNo, @PathVariable("userNo") long userNo) {
+	
+		boardService.deleteMessage(gNo, oNo, authUser.getNo());
 		return "redirect:/board";
 	}
 	
+	@Auth
 	@RequestMapping(value="/write/{gNo}", method= RequestMethod.GET)
 	public String write(@PathVariable("gNo") long gNo,  Model model) {
 		return "board/write";
@@ -105,21 +84,15 @@ public class BoardController {
 		return "board/write";
 	}
 	
+	@Auth
 	@RequestMapping(value="/write/{gNo}", method= RequestMethod.POST)
-	public String write(HttpSession session, @PathVariable("gNo") long gNo, BoardVo vo, Model model) {
+	public String write(@AuthUser UserVo authUser, @PathVariable("gNo") long gNo, BoardVo vo, Model model) {
 		long oNo = 1L;
 		int depth = 1;
 		vo.setgNo(gNo+1L);
 		vo.setoNo(oNo);
 		vo.setDepth(depth);
 		
-		if(session == null) {
-			return "board/view";
-		}
-		UserVo authUser= (UserVo)session.getAttribute("authUser");
-		if(authUser == null) {
-			return "board/view";
-		}
 		UserVo userVo = userService.getUser(authUser.getNo());
 		
 		vo.setUserNo(userVo.getNo());
@@ -127,19 +100,13 @@ public class BoardController {
 		return "redirect:/board";
 	}
 	
+	@Auth
 	@RequestMapping(value="/write/{gNo}/{oNo}/{depth}", method= RequestMethod.POST)
-	public String write(HttpSession session, @PathVariable("gNo") long gNo, @PathVariable("oNo") long oNo,@PathVariable("depth") int depth, BoardVo vo) {
+	public String write(@AuthUser UserVo authUser, @PathVariable("gNo") long gNo, @PathVariable("oNo") long oNo,@PathVariable("depth") int depth, BoardVo vo) {
 		vo.setgNo(gNo);
 		vo.setoNo(oNo+1L);
 		vo.setDepth(depth+1);
 		
-		if(session == null) {
-			return "board/view";
-		}
-		UserVo authUser= (UserVo)session.getAttribute("authUser");
-		if(authUser == null) {
-			return "board/view";
-		}
 		UserVo userVo = userService.getUser(authUser.getNo());
 		
 		vo.setUserNo(userVo.getNo());
@@ -147,12 +114,14 @@ public class BoardController {
 		return "redirect:/board";
 	}
 	
+	@Auth
 	@RequestMapping(value="/modify/{no}", method= RequestMethod.GET)
-	public String updateform( @PathVariable("no") long no) {
+	public String updateform(@AuthUser UserVo authUser, @PathVariable("no") long no) {
 		
 		return "board/modify";
 	}
 	
+	@Auth
 	@RequestMapping(value="/modify/{no}", method= RequestMethod.POST)
 	public String update( @PathVariable("no") long no,
 							@RequestParam(value="title", required=false, defaultValue="") String title, 

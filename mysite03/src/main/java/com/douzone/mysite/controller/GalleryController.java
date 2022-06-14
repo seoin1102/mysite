@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.douzone.mysite.security.Auth;
 import com.douzone.mysite.service.FileUploadService;
 import com.douzone.mysite.service.GalleryService;
 import com.douzone.mysite.vo.GalleryVo;
 import com.douzone.mysite.vo.GuestbookVo;
 
+@Auth(role="ADMIN")
 @Controller
 @RequestMapping("/gallery")
 public class GalleryController {
@@ -38,7 +40,7 @@ public class GalleryController {
 		@RequestParam(value="comments", required=true, defaultValue="") String comments,
 		@RequestParam("file") MultipartFile multipartFile,
 		Model model) {
-		String url = fileUploadService.restore(multipartFile);
+		String url = fileUploadService.restoreImage(multipartFile);
 		
 		galleryService.insert(url, comments);
 

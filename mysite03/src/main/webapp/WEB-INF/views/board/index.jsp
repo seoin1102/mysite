@@ -59,8 +59,8 @@
 											<td>${vo.userName}</td>
 											<td>${vo.hit}</td>
 											<td>${vo.regDate}</td>
-											<c:if test='${vo.userNo == userVo.no}'>
-												<td><a href="${pageContext.request.contextPath }/board/delete/${vo.gNo}/${vo.oNo}/${userVo.no}" class="del">삭제</a></td>
+											<c:if test='${vo.userNo == authUser.no}'>
+												<td><a href="${pageContext.request.contextPath }/board/delete/${vo.gNo}/${vo.oNo}/${authUser.no}" class="del">삭제</a></td>
 											</c:if>
 										</tr>
 									</c:if>
@@ -86,8 +86,8 @@
 										<td>${vo.userName}</td>
 										<td>${vo.hit}</td>
 										<td>${vo.regDate}</td>
-										<c:if test='${vo.userNo == userVo.no}'>
-											<td><a href="${pageContext.request.contextPath }/board/delete/${vo.gNo}/${vo.oNo}/${userVo.no}" class="del">삭제</a></td>
+										<c:if test='${vo.userNo == authUser.no}'>
+											<td><a href="${pageContext.request.contextPath }/board/delete/${vo.gNo}/${vo.oNo}/${authUser.no}" class="del">삭제</a></td>
 										</c:if>
 									</tr>
 								</c:forEach>

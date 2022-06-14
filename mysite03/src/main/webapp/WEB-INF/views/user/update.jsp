@@ -15,7 +15,6 @@
 		<div id="content">
 			<div id="user">
 				<form id="join-form" name="joinForm" method="post" action="${pageContext.request.contextPath }/user/update">
-	
 					<label class="block-label" for="name">이름</label>
 					<input id="name" name="name" type="text" value="${userVo.name }">
 
@@ -32,6 +31,7 @@
 								<label>여</label> <input type="radio" name="gender" value="female" checked="checked">
 								<label>남</label> <input type="radio" name="gender" value="male">
 							</c:when>
+							
 							<c:otherwise>
 								<label>여</label> <input type="radio" name="gender" value="female">
 								<label>남</label> <input type="radio" name="gender" value="male" checked="checked">

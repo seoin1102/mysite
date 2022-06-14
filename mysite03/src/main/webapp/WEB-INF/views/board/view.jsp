@@ -40,12 +40,11 @@
 				<c:choose>
 					<c:when test="${empty authUser }">
 						<a href="${pageContext.request.contextPath }/board">글목록</a>
-						<a href="${pageContext.request.contextPath }/user/login" id="new-book">글수정</a>
 						<a href="${pageContext.request.contextPath }/user/login" id="new-book">답글달기</a>
 					</c:when>
 					<c:otherwise>
 						<a href="${pageContext.request.contextPath }/board">글목록</a>
-						<c:if test = '${vo.userNo == userVo.no}'>
+						<c:if test = '${vo.userNo == authUser.no}'>
 							<a href="${pageContext.request.contextPath }/board/modify/${vo.no}">글수정</a>
 						</c:if>
 						<a href="${pageContext.request.contextPath }/board/write/${vo.gNo}/${vo.oNo}/${vo.depth}">답글달기</a>

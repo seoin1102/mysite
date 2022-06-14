@@ -11,9 +11,10 @@ import com.douzone.mysite.service.UserService;
 import com.douzone.mysite.vo.UserVo;
 
 public class LoginInterceptor implements HandlerInterceptor {
-
+	
 	@Autowired
 	private UserService userService;
+	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
@@ -21,19 +22,24 @@ public class LoginInterceptor implements HandlerInterceptor {
 		String password = request.getParameter("password");
 		
 		UserVo authUser = userService.getUser(email, password);
-		if(authUser==null) {
+		if(authUser == null) {
 			request.setAttribute("email", email);
 			request.setAttribute("result", "fail");
-
 			request.getRequestDispatcher("/WEB-INF/views/user/login.jsp").forward(request, response);
 			return false;
 		}
+		
+		
 		/* session 처리 */
-		HttpSession session =request.getSession(true);
+		HttpSession session = request.getSession(true);
 		session.setAttribute("authUser", authUser);
 		
+		if(authUser.getRole().equals("ADMIN")) {
+	         response.sendRedirect(request.getContextPath()+"/admin");
+	         return false;
+	      }
+
 		response.sendRedirect(request.getContextPath());
 		return false;
 	}
-
 }

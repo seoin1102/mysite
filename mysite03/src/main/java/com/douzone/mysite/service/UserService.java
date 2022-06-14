@@ -15,20 +15,6 @@ public class UserService {
 		userRepository.insert(vo);
 	}
 
-	public UserVo getUser(UserVo vo) {
-		return userRepository.findByEmailAndPassword(vo);
-	}
-
-	public UserVo getUser(Long no) {
-		return userRepository.findByNo(no);
-
-	}
-
-	public void updateUser(UserVo vo) {
-		userRepository.update(vo);
-		
-	}
-
 	public UserVo getUser(String email, String password) {
 		UserVo vo = new UserVo();
 		vo.setEmail(email);
@@ -36,5 +22,17 @@ public class UserService {
 		
 		return getUser(vo);
 	}
+	
+	public UserVo getUser(UserVo vo) {
+		return userRepository.findByEmailAndPassword(vo);
+	}
 
+	public UserVo getUser(Long no) {
+		System.out.println("-----" + no);
+		return userRepository.findByNo(no);
+	}
+
+	public void updateUser(UserVo vo) {
+		userRepository.update(vo);
+	}
 }
