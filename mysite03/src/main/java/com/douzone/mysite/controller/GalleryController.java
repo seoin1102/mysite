@@ -34,7 +34,7 @@ public class GalleryController {
 		model.addAttribute("list",list);
 		return "gallery/index";
 	}
-	
+	@Auth(role="ADMIN")
 	@RequestMapping(value="/upload", method=RequestMethod.POST)
 	public String upload(
 		@RequestParam(value="comments", required=true, defaultValue="") String comments,
@@ -47,7 +47,7 @@ public class GalleryController {
 		model.addAttribute("url", url);
 		return "redirect:/gallery";
 	}
-	
+	@Auth(role="ADMIN")
 	@RequestMapping(value="/delete/{no}", method=RequestMethod.GET)
 	public String delete(@PathVariable("no") Long no) {
 		
