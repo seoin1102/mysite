@@ -13,7 +13,7 @@ import com.douzone.mysite.service.UserService;
 import com.douzone.mysite.vo.SiteVo;
 import com.douzone.mysite.vo.UserVo;
 
-public class SideInterceptor implements HandlerInterceptor {
+public class SiteInterceptor implements HandlerInterceptor {
 	
 	@Autowired
 	private SiteService siteService;
