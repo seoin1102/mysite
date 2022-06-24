@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
-public class MyWebApplication {
+public class MySiteApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(MyWebApplication.class, args);
+		SpringApplication.run(MySiteApplication.class, args);
 	}
 }
