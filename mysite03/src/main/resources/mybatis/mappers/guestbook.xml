@@ -22,6 +22,7 @@
 		and password=#{password}
 
 		]]>
+		
 	</delete>
 	
 	<insert  id="insert" parameterType="guestbookvo">
