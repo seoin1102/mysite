@@ -54,7 +54,7 @@ $(function(){
 			   
 			  var vo = {};
 		      vo.no =$('#hidden-no').val();
-		      vo.password = $("#input-password").val();
+		      vo.password = $("#password-delete").val();
 				console.log(vo);
 			  $.ajax({
 	    	  url: "${pageContext.request.contextPath }/api/guestbook/delete-form",
@@ -69,7 +69,14 @@ $(function(){
 					}
 					console.log(response);
 					if(response.data==-1){
-						
+						$("#input-password").val('').focus();
+						$(".validateTips-normal").hide();
+						$(".validateTips-error").show();
+					
+					}else{
+						$("#input-password").val('');
+						$("#dialog-delete-form").dialog('close');
+						$("[data-no="+vo.no+"]").remove();
 					}
 	    	  }
 	      })

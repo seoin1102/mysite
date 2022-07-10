@@ -37,7 +37,10 @@ public class GuestbookRepository {
 		Map<String, Object> map = new HashMap<>();
 		map.put("no", no);
 		map.put("password", password);
-		return sqlSession.delete("guestbook.delete",map)==1;
+		boolean result = sqlSession.delete("guestbook.delete",map)==1;
+		System.out.println("result:::::"+result);
+		System.out.println("password!!!!!"+password);
+		return result;
 	}
 	
 	public boolean insert(GuestbookVo vo) {
