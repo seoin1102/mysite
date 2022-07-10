@@ -32,14 +32,17 @@ public class GuestbookRepository {
 	public List<GuestbookVo> findAll() {
 		return sqlSession.selectList("guestbook.findAll");
 	}
+	
+	public List<GuestbookVo> findByNo(long no) {
+	
+		return sqlSession.selectList("guestbook.findByNo",no);
+	}
 
 	public boolean delete(Long no, String password) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("no", no);
 		map.put("password", password);
 		boolean result = sqlSession.delete("guestbook.delete",map)==1;
-		System.out.println("result:::::"+result);
-		System.out.println("password!!!!!"+password);
 		return result;
 	}
 	

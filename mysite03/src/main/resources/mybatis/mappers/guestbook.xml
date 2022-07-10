@@ -11,6 +11,21 @@
 			   date_format(reg_date,'%Y/%m/%d %H:%i:%s') as regDate
 		from guestbook 
 		order by no desc
+		limit 6
+		]]>
+	</select>
+	
+	<select id="findByNo" parameterType="long" resultType="guestbookvo">
+		<![CDATA[
+		select no, 
+			   name, 
+			   password, 
+			   message, 
+			   date_format(reg_date,'%Y/%m/%d %H:%i:%s') as regDate
+		from guestbook 
+		where no < #{no} 
+		order by no desc
+		limit 6
 		]]>
 	</select>
 	

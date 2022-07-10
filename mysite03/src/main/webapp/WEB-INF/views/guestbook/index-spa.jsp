@@ -42,6 +42,23 @@ var fetch = function() {
    });
 };
 
+var messageBox = function(title, message, callback){
+	$("#dialog-message")
+		.attr("title", title)
+		.dialog({
+			width: 340,
+			modal: true,
+			buttons:{
+				"확인":function(){
+					$(this).dialog('close');
+				}
+			},
+			close:callback 
+			
+		});
+	$("#dialog-message p").text(message)
+		
+}
 $(function(){
    // 삭제 다이얼로그 객체를 미리 만들기
    var dialogDelete = $("#dialog-delete-form").dialog({
@@ -49,13 +66,10 @@ $(function(){
 	   modal: true,
 	   buttons:{
 		   "삭제":function(){
-			   console.log("AJAX 삭제하기");
-			   // $(this).dialog('close');
-			   
+			
 			  var vo = {};
 		      vo.no =$('#hidden-no').val();
 		      vo.password = $("#password-delete").val();
-				console.log(vo);
 			  $.ajax({
 	    	  url: "${pageContext.request.contextPath }/api/guestbook/delete-form",
 	    	  type: "delete",
@@ -67,14 +81,13 @@ $(function(){
 						console.error(response.message);
 						return;
 					}
-					console.log(response);
 					if(response.data==-1){
-						$("#input-password").val('').focus();
+						$("#password-delete").val('').focus();
 						$(".validateTips-normal").hide();
 						$(".validateTips-error").show();
 					
 					}else{
-						$("#input-password").val('');
+						$("#password-delete").val('');
 						$("#dialog-delete-form").dialog('close');
 						$("[data-no="+vo.no+"]").remove();
 					}
@@ -93,7 +106,6 @@ $(function(){
       .on("click", "#list-guestbook li a", function(event) {
          event.preventDefault();
          
-         console.log($(this).data('no'));
          $('#hidden-no').val($(this).data('no'))
          dialogDelete.dialog('open');
          
@@ -115,8 +127,26 @@ $(function(){
 	      vo.password = $("#input-password").val();
 	      vo.message = $("#tx-content").val();
 	      
-	      console.log(vo);
+	      if($("#input-name").val() === '') {
+				messageBox("글 작성", "이름이 비어 있습니다.", function(){
+					$("#input-name").focus();
+				})
+				return;
+			}
 	      
+	      if($("#input-password").val() === '') {
+				messageBox("글 작성", "비밀번호가 비어 있습니다.", function(){
+					$("#input-password").focus();
+				})
+				return;
+			}
+	      
+	      if($("#tx-content").val() === '') {
+				messageBox("글 작성", "내용을 입력해 주세요.", function(){
+					$("#tx-content").focus();
+				})
+				return;
+			}
 	      $.ajax({
 	    	  url: "${pageContext.request.contextPath }/api/guestbook/add-form",
 	    	  type: "post",
@@ -128,7 +158,9 @@ $(function(){
 						console.error(response.message);
 						return;
 					}
-					console.log(response);
+					$("#input-name").val('');
+				    $("#input-password").val('');
+				    $("#tx-content").val('');
 					render(response.data, false);
 					
 	    	  }
@@ -136,6 +168,46 @@ $(function(){
 	   })
 	   
 	})
+	
+$(function() {
+	$(window).scroll(function() {
+		var $window = $(this);
+		var $document = $(document);
+		
+		var windowHeight = $window.height();
+		var documentHeight = $document.height();
+		var scrollTop = $window.scrollTop();
+		
+		if(documentHeight < windowHeight + scrollTop + 20) {
+			console.log("fetch() call");
+			scroll();
+			
+			return;
+			
+		}
+	})
+});  	
+
+var scroll = function() {
+		var no =$("#list-guestbook li:last-child").attr("data-no");
+		
+		console.log(no);
+		//console.log($("#list-guestbook li data-no"));
+		$.ajax({
+	      url: "${pageContext.request.contextPath }/api/guestbook/startNo?no="+no,
+	      type: "get",
+	      dataType: "json",
+	      success: function(response) {
+	        if(response.result !== 'success'){
+	            console.error(response.message);
+	            return;
+	         	}
+			response.data.forEach(function(vo){
+					render(vo, true);
+				}) 
+	     	 }      
+	   });
+	};
 </script>
 </head>
 <body>
